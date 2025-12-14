@@ -4,10 +4,13 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import Cookies from "universal-cookie";
 
+interface AddToCartButtonProps {
+  product : string ,
+  userId : string
+}
 
 
-
-export default function AddToCartButton({ product, userId }) {
+export default function AddToCartButton({ product, userId }: AddToCartButtonProps) {
 
   const cookies = new Cookies()
   const token = cookies.get("Token")
