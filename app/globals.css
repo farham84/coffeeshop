@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+@keyframes spin360 {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-spin360 {
+  animation: spin360 1s linear infinite;
+}
+
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.bg-cream { background-color: #ece4d0; }
+.bg-cream2 { background-color: #f7f5f0; }   /* فضای روشن، آرام و دعوت‌کننده */
+.text-grayDark { color: #969393; }        /* متن اصلی برای خوانایی */
+
+/* نوار ناوبری و فوتر */
+.bg-coffeeDark { background-color: #7c6248; }  /* حس گرم و طبیعی */
+.text-coffeeDark { color: #ffffff; }          /* متن داخل هدر یا فوتر */
+
+/* کارت محصولات / بخش محتوا */
+.bg-coffeeMedium { background-color: #6F4E37; } /* کارت‌ها و بخش‌های مهم */
+.text-coffeeMedium { color: #6F4E37; }         /* متن روی کارت‌ها */
+
+/* دکمه‌ها و لینک‌های CTA */
+.bg-honey { background-color: #f3dbab; }      /* دکمه‌های اصلی، جلب توجه */
+.text-honey { color: #4B3621; }               /* متن روی پس‌زمینه روشن */
+.hover-bg-honey:hover { background-color: #E4AC5C; } /* حالت hover */
+
+/* هایلایت‌ها / جزئیات / افکت‌ها */
+.bg-greenSoft { background-color: #A3B18A; } /* عناصر تأکیدی کوچک یا hover */
+.text-greenSoft { color: #A3B18A; }          /* متن یا icon هایلایت */
+.hover-bg-greenSoft:hover { background-color: #8AA27A; } /* حالت hover سبز نرم */
+
+/* رنگ‌های ثانویه و اضافی */
+.bg-brownLight { background-color: #A87B54; }  /* کارت‌های ثانویه یا منو */
+.text-brownLight { color: #A87B54; }
+.bg-goldAccent { background-color: #C2B280; } /* جزئیات، خطوط جداکننده */
+.text-goldAccent { color: #C2B280; }
+
+
