@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { FaHome, FaInfoCircle, FaCoffee , FaUser, FaClipboardList, FaShoppingCart, FaSignInAlt, FaUserPlus } from "react-icons/fa";
+import { FaHome, FaInfoCircle, FaCoffee , FaUser, FaClipboardList, FaShoppingCart, FaSignInAlt, FaUserPlus, FaBars, FaTimes } from "react-icons/fa";
 import Cookies from "universal-cookie";
 
 export default function Nav() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const cookie = new Cookies();
 
   useEffect(() => {
@@ -14,93 +15,107 @@ export default function Nav() {
     setIsLoggedIn(!!token);
   }, []);
 
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+
   return (
-    <div className="flex justify-between items-center text-cream px-8 py-5 shadow-xl rounded-2xl m-5 bg-cream">
+    <div className="relative bg-cream shadow-xl rounded-2xl m-5 px-6 py-4 md:px-8 flex items-center md:justify-between gap-6">
 
-      {/* سمت راست */}
-      <div className="flex gap-10 mr-6 relative">
-        {/* خانه */}
-        <Link href="/" className="group flex flex-col items-center relative cursor-pointer">
-          <FaHome className="text-3xl text-cream hover:text-honey transition-colors duration-300" />
-          <span className="absolute -bottom-6 text-sm text-cream opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            خانه
-          </span>
-        </Link>
+      {/* همبرگر موبایل */}
+     
 
-        {/* درباره ما */}
-        <Link href="/about" className="group flex flex-col items-center relative cursor-pointer">
-          <FaInfoCircle className="text-3xl text-cream hover:text-honey transition-colors duration-300" />
-          <span className="absolute -bottom-6 text-sm text-cream px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-            درباره ما
-          </span>
-        </Link>
-
-        {/* منو */}
-        <Link href="/menu" className="group flex flex-col items-center relative cursor-pointer">
-          <FaCoffee className="text-3xl text-cream hover:text-honey transition-colors duration-300" />
-          <span className="absolute -bottom-6 text-sm text-cream opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            منو
-          </span>
-        </Link>
-      </div>
-
-      {/* لوگو */}
-      <div className="flex items-center cursor-pointer hover:scale-105 transition-transform duration-300">
+      {/* لوگو همیشه سمت راست */}
+      <div className="ml-auto flex items-center cursor-pointer hover:scale-105 transition-transform duration-300">
         <img src="/coffee.png" alt="coffee icon" className="w-10 h-10" />
-        <p className="font-serif text-3xl font-extrabold tracking-widest text-cream drop-shadow-lg hover:text-honey">
-          Jojo <span className="text-coffeeMedium italic">Coffee</span>
+        <p 
+          className="font-serif font-extrabold tracking-widest text-cream drop-shadow-lg hover:text-honey mx-1 flex items-center flex-nowrap"
+          style={{ fontSize: 'clamp(0.9rem, 3vw, 2rem)' }}
+        >
+          <span className="text-coffeeMedium italic ml-1">Coffee</span> Jojo
         </p>
         <img src="/coffee.png" alt="coffee icon" className="w-10 h-10" />
       </div>
 
-      {/* سمت چپ */}
-      <div className="flex gap-8 ml-6">
-        {isLoggedIn ? (
-          <>
-            {/* سبد خرید */}
-            <Link href="/cart" className="group flex flex-col items-center relative cursor-pointer">
-              <FaShoppingCart className="text-3xl text-cream hover:text-honey transition-colors duration-300" />
-              <span className="absolute -bottom-6 text-sm text-cream px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-                سبد خرید
-              </span>
-            </Link>
 
-            {/* سفارشات من */}
-            <Link href="/orders" className="group flex flex-col items-center relative cursor-pointer">
-              <FaClipboardList className="text-3xl text-cream hover:text-honey transition-colors duration-300" />
-              <span className="absolute -bottom-6 text-sm text-cream px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-                سفارشات من
-              </span>
-            </Link>
+      {/* همبرگر موبایل */}
+      <button 
+        className="md:hidden text-3xl text-coffeeMedium"
+        onClick={toggleMenu}
+      >
+        {menuOpen ? <FaTimes /> : <FaBars />}
+      </button>
 
-            {/* حساب من */}
-            <Link href="/account" className="group flex flex-col items-center relative cursor-pointer">
-              <FaUser className="text-3xl text-cream hover:text-honey transition-colors duration-300" />
-              <span className="absolute -bottom-6 text-sm text-cream px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-                حساب من
-              </span>
-            </Link>
-          </>
-        ) : (
-          <>
-            {/* دکمه ورود */}
-            <Link href="/login" className="group flex flex-col items-center relative cursor-pointer">
-              <FaSignInAlt className="text-3xl text-cream hover:text-honey transition-colors duration-300" />
-              <span className="absolute -bottom-6 text-sm text-cream px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-                ورود
-              </span>
-            </Link>
-
-            {/* دکمه ثبت نام */}
-            <Link href="/register" className="group flex flex-col items-center relative cursor-pointer">
-              <FaUserPlus className="text-3xl text-cream hover:text-honey transition-colors duration-300" />
-              <span className="absolute -bottom-6 text-sm text-cream px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-                ثبت نام
-              </span>
-            </Link>
-          </>
-        )}
+      {/* منو دسکتاپ */}
+      <div className="hidden md:flex gap-10">
+        <NavLinks isLoggedIn={isLoggedIn} />
       </div>
+
+      {/* منو موبایل */}
+      {menuOpen && (
+        <div className="absolute top-full left-0 w-full bg-cream shadow-xl rounded-b-2xl flex flex-col items-center py-4 gap-4 md:hidden z-50">
+          <NavLinks isLoggedIn={isLoggedIn} mobile />
+        </div>
+      )}
     </div>
   );
 }
+
+// کامپوننت لینک‌ها برای دسکتاپ و موبایل
+// کامپوننت لینک‌ها برای دسکتاپ و موبایل
+function NavLinks({ isLoggedIn, mobile }: { isLoggedIn: boolean, mobile?: boolean }) {
+  // کلاس اصلی لینک‌ها
+  const linkClass = `group ${mobile ? "flex items-center gap-2 text-lg" : "flex flex-col items-center relative text-3xl"} text-cream hover:text-honey transition-colors duration-300`;
+
+  // کلاس span متن
+  const spanClass = mobile
+    ? "ml-2" // موبایل کنار آیکون
+    : "absolute -bottom-6 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap"; // دسکتاپ زیر آیکون
+
+  return (
+    <>
+      <Link href="/" className={linkClass}>
+        <FaHome className="text-3xl" />
+        <span className={spanClass}>{mobile ? "خانه" : "خانه"}</span>
+      </Link>
+
+      <Link href="/about" className={linkClass}>
+        <FaInfoCircle className="text-3xl" />
+        <span className={spanClass}>{mobile ? "درباره ما" : "درباره ما"}</span>
+      </Link>
+
+      <Link href="/menu" className={linkClass}>
+        <FaCoffee className="text-3xl" />
+        <span className={spanClass}>{mobile ? "منو" : "منو"}</span>
+      </Link>
+
+      {isLoggedIn ? (
+        <>
+          <Link href="/cart" className={linkClass}>
+            <FaShoppingCart className="text-3xl" />
+            <span className={spanClass}>{mobile ? "سبد خرید" : "سبد خرید"}</span>
+          </Link>
+          <Link href="/orders" className={linkClass}>
+            <FaClipboardList className="text-3xl" />
+            <span className={spanClass}>{mobile ? "سفارشات من" : "سفارشات من"}</span>
+          </Link>
+          <Link href="/account" className={linkClass}>
+            <FaUser className="text-3xl" />
+            <span className={spanClass}>{mobile ? "حساب من" : "حساب من"}</span>
+          </Link>
+        </>
+      ) : (
+        <>
+          <Link href="/login" className={linkClass}>
+            <FaSignInAlt className="text-3xl" />
+            <span className={spanClass}>{mobile ? "ورود" : "ورود"}</span>
+          </Link>
+          <Link href="/register" className={linkClass}>
+            <FaUserPlus className="text-3xl" />
+            <span className={spanClass}>{mobile ? "ثبت نام" : "ثبت نام"}</span>
+          </Link>
+        </>
+      )}
+    </>
+  );
+}
+
+

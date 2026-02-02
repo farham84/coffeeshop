@@ -1,26 +1,41 @@
 'use client'
 
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 export default function HeroBanner() {
- 
   const beanSizes = [40, 40, 34]; 
-
 
   const random = (min: number, max: number) => Math.random() * (max - min) + min;
 
-  
-  const coffeeBeans = Array.from({ length: 30 }, (_, i) => ({
+  const [numBeans, setNumBeans] = useState(30);
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setNumBeans(10); // موبایل فقط 10 دونه
+      } else {
+        setNumBeans(30); // دسکتاپ 30 دونه
+      }
+    };
+
+    handleResize(); // چک اولیه
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const coffeeBeans = Array.from({ length: numBeans }, (_, i) => ({
     size: beanSizes[Math.floor(Math.random() * beanSizes.length)],
-    top: random(5, 60), // درصد ارتفاع رندوم
-    left: random(10, 90), // درصد عرض رندوم
-    duration: random(5, 8), // مدت انیمیشن رندوم
-    rotate: random(-15, 15), // مقدار چرخش رندوم
+    top: random(5, 60),
+    left: random(10, 90),
+    duration: random(5, 8),
+    rotate: random(-15, 15),
   }));
 
   return (
     <div className="relative w-full h-[65vh] rounded-2xl  bg-gradient-to-br from-[#CFA67A] via-[#F3D5A0] to-[#FFF5E6] overflow-hidden flex items-center justify-center">
-
+      
       {/* Floating Coffee Beans */}
       {coffeeBeans.map((bean, i) => (
         <motion.img
@@ -58,7 +73,6 @@ export default function HeroBanner() {
         </motion.button>
       </motion.div>
 
-      
       <motion.img
         src="/wave.png"
         className="absolute bottom-0 mr-0 w-full h-80"

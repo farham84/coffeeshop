@@ -77,24 +77,39 @@ export default function ContentSection() {
 
       {/* Categories */}
       <motion.div
-        className="flex gap-4 justify-center mb-8"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-      >
-        {categories.map((cat, i) => (
-          <motion.button
-            key={i}
-            onClick={() => setSelectedCategory(cat.name)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-white font-semibold shadow-md cursor-pointer
-              ${selectedCategory === cat.name ? cat.color : 'bg-neutral-300 text-black hover:bg-gray-400'}
-            `}
-            whileHover={{ scale: 1.05 }}
-          >
-            {cat.icon} {cat.name}
-          </motion.button>
-        ))}
-      </motion.div>
+  className="
+    flex gap-3 mb-8
+    overflow-x-auto md:overflow-visible
+    justify-start md:justify-center
+    px-1
+    scrollbar-hide
+  "
+  initial={{ opacity: 0 }}
+  whileInView={{ opacity: 1 }}
+  transition={{ duration: 0.8, delay: 0.2 }}
+>
+  {categories.map((cat, i) => (
+    <motion.button
+      key={i}
+      onClick={() => setSelectedCategory(cat.name)}
+      className={`
+        flex items-center gap-2
+        px-4 py-2
+        rounded-lg
+        whitespace-nowrap
+        text-white font-semibold
+        shadow-md cursor-pointer
+        ${selectedCategory === cat.name
+          ? cat.color
+          : 'bg-neutral-300 text-black hover:bg-gray-400'}
+      `}
+      whileHover={{ scale: 1.05 }}
+    >
+      {cat.icon} {cat.name}
+    </motion.button>
+  ))}
+</motion.div>
+
 
       {/* Products */}
       {loading ? (
